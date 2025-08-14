@@ -1,6 +1,6 @@
 import brandLogo from "@/assets/brand-logo.png";
 import heroImage from "@/assets/hero-image.png";
-import heroImageMobile from "@/assets/hero-image-mobile.png";
+import heroImageMobile from "@/assets/hero-image-mobile.jpg";
 
 export default function HeroSection() {
   return (

@@ -23,7 +23,7 @@ const features = [
     icon: Users,
     title: "Complete Range",
     description:
-      "From compact 2-door models to spacious 3-door systems with multiple color options to suit every need.",
+      "From compact 2-door models to spacious 4-door systems with multiple color options to suit every need.",
   },
 ];
 

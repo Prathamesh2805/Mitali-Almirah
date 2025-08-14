@@ -41,7 +41,7 @@ const colorOptions = [
 
 const ProductsSection = () => {
   return (
-    <section id="products" className="py-20 bg-gradient-subtle">
+    <section id="products" className="pb-10 pt-10 bg-gradient-subtle">
       <div className="container">
         <div className="text-center mb-16">
           <h2 className="text-4xl md:text-5xl font-bold mb-6 text-primary">

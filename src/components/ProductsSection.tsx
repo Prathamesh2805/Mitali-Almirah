@@ -41,7 +41,7 @@ const colorOptions = [
 
 const ProductsSection = () => {
   return (
-    <section className="py-20 bg-gradient-subtle">
+    <section id="products" className="py-20 bg-gradient-subtle">
       <div className="container">
         <div className="text-center mb-16">
           <h2 className="text-4xl md:text-5xl font-bold mb-6 text-primary">
@@ -156,11 +156,11 @@ const ProductsSection = () => {
             </div>
           </div>
           
-          <p className="text-lg text-muted-foreground mb-6">
+          <p className="text-lg text-muted-foreground mb-3">
             Get detailed specifications, pricing, and customization options for your requirements.
           </p>
           <div className="inline-flex items-center px-6 py-3 bg-wood-light rounded-lg">
-            <span className="text-primary font-semibold">📧 Contact us for complete catalog with technical drawings and pricing details</span>
+            <span className="text-primary font-semibold">📧 Contact us for complete catalog with pricing details</span>
           </div>
         </div>
       </div>

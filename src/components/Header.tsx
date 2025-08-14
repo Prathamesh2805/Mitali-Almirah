@@ -10,6 +10,7 @@ export default function Header() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
           {/* Logo / Brand */}
+          <a href="#home">
           <div className="flex items-center">
             <img
               src={brandLogo}
@@ -17,26 +18,26 @@ export default function Header() {
               className="h-10 w-auto object-contain"
             />
           </div>
-
+          </a>
           {/* Desktop Menu */}
           <nav className="hidden md:flex space-x-8">
-            <a
-              href="#products"
-              className="text-amber-900 hover:text-amber-800 font-medium"
-            >
-              Products
-            </a>
             <a
               href="#about"
               className="text-amber-900 hover:text-amber-800 font-medium"
             >
-              About
+              About Us
+            </a>
+            <a
+              href="#products"
+              className="text-amber-900 hover:text-amber-800 font-medium"
+            >
+              Our Products
             </a>
             <a
               href="#contact"
               className="text-amber-900 hover:text-amber-800 font-medium"
             >
-              Contact
+              Contact Us
             </a>
           </nav>
 

@@ -1,5 +1,6 @@
-import React from "react";
+import React, { useRef, useState, useEffect } from "react";
 import { Phone, Mail, MapPin, Clock } from "lucide-react";
+import emailjs from "@emailjs/browser";
 
 export default function ContactUs() {
   const contactInfo = [
@@ -25,6 +26,51 @@ export default function ContactUs() {
     },
   ];
 
+  // Form ref and status state for UI feedback
+  const form = useRef<HTMLFormElement | null>(null);
+  const [status, setStatus] = useState<
+    "idle" | "sending" | "success" | "error"
+  >("idle");
+
+  // Read Vite env variables (must be prefixed with VITE_)
+  const EMAILJS_SERVICE_ID = (import.meta.env.VITE_EMAILJS_SERVICE_ID as string) || "";
+  const EMAILJS_TEMPLATE_ID = (import.meta.env.VITE_EMAILJS_TEMPLATE_ID as string) || "";
+  const EMAILJS_PUBLIC_KEY = (import.meta.env.VITE_EMAILJS_PUBLIC_KEY as string) || "";
+
+  // Initialize EmailJS SDK with your public key on component mount
+  useEffect(() => {
+    if (EMAILJS_PUBLIC_KEY) {
+      emailjs.init(EMAILJS_PUBLIC_KEY);
+    }
+  }, [EMAILJS_PUBLIC_KEY]);
+
+  const sendEmail = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    if (!form.current) return;
+
+    if (!EMAILJS_SERVICE_ID || !EMAILJS_TEMPLATE_ID) {
+      console.error('EmailJS service/template id not set.');
+      setStatus('error');
+      return;
+    }
+
+    setStatus("sending");
+
+    // Use sendForm (init already called)
+    emailjs
+      .sendForm(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, form.current)
+      .then(() => {
+        setStatus("success");
+        form.current?.reset();
+        setTimeout(() => setStatus("idle"), 5000);
+      })
+      .catch((err) => {
+        console.error('EmailJS send error:', err);
+        setStatus("error");
+        setTimeout(() => setStatus("idle"), 5000);
+      });
+  };
+
   return (
     <section id="contact" className="bg-white py-16 px-4">
       <h2 className="text-3xl sm:text-4xl font-bold text-amber-900 mb-10 text-center">
@@ -48,13 +94,22 @@ export default function ContactUs() {
         </div>
 
         {/* Contact Form */}
-        <form className="w-full lg:w-1/2 bg-amber-50 p-6 rounded-lg shadow-md">
+        <form
+          ref={form}
+          onSubmit={sendEmail}
+          className="w-full lg:w-1/2 bg-amber-50 p-6 rounded-lg shadow-md"
+        >
+          {/* include timestamp for template */}
+          <input type="hidden" name="time" value={new Date().toString()} />
+
           <div className="mb-4">
             <label className="block text-amber-900 mb-2 font-medium">
               Name
             </label>
             <input
               type="text"
+              name="user_name"
+              required
               className="w-full p-2 border border-amber-200 rounded focus:outline-none focus:border-amber-500"
               placeholder="Your Name"
             />
@@ -66,6 +121,8 @@ export default function ContactUs() {
             </label>
             <input
               type="email"
+              name="user_email"
+              required
               className="w-full p-2 border border-amber-200 rounded focus:outline-none focus:border-amber-500"
               placeholder="Your Email"
             />
@@ -76,7 +133,9 @@ export default function ContactUs() {
               Message
             </label>
             <textarea
-              rows="4"
+              name="message"
+              rows={4}
+              required
               className="w-full p-2 border border-amber-200 rounded focus:outline-none focus:border-amber-500"
               placeholder="Your Message"
             ></textarea>
@@ -84,10 +143,26 @@ export default function ContactUs() {
 
           <button
             type="submit"
-            className="w-full bg-amber-900 text-white py-2 px-4 rounded hover:bg-amber-800 transition-colors"
+            disabled={status === "sending"}
+            className={`w-full ${
+              status === "sending" ? "bg-amber-700" : "bg-amber-900"
+            } text-white py-2 px-4 rounded hover:bg-amber-800 transition-colors disabled:opacity-70`}
           >
-            Send Message
+            {status === "sending" ? "Sending..." : "Send Message"}
           </button>
+
+          {status === "success" && (
+            <p className="mt-3 text-green-600 text-center">
+              Message sent successfully. Thank you!
+            </p>
+          )}
+          {status === "error" && (
+            <p className="mt-3 text-red-600 text-center">
+              Failed to send message. Please try again later.
+            </p>
+          )}
+
+          {/* Helpful comment: Replace placeholders above with your actual EmailJS IDs or use environment variables. */}
         </form>
       </div>
     </section>

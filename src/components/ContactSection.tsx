@@ -7,7 +7,7 @@ export default function ContactUs() {
     {
       icon: <Phone className="text-amber-900 w-6 h-6 sm:w-8 sm:h-8" />,
       title: "Phone",
-      details: "+91 98765 43210",
+      details: "+91 8983227762",
     },
     {
       icon: <Mail className="text-amber-900 w-6 h-6 sm:w-8 sm:h-8" />,
@@ -17,12 +17,12 @@ export default function ContactUs() {
     {
       icon: <MapPin className="text-amber-900 w-6 h-6 sm:w-8 sm:h-8" />,
       title: "Address",
-      details: "123, Pune, Maharashtra, India",
+      details: "Vasarni, Nanded, Maharashtra, India",
     },
     {
       icon: <Clock className="text-amber-900 w-6 h-6 sm:w-8 sm:h-8" />,
       title: "Working Hours",
-      details: "Mon - Sat: 9:00 AM - 7:00 PM",
+      details: "Mon - Sat: 9:00 AM - 6:00 PM",
     },
   ];
 
